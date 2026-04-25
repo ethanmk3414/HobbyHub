@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div style="text-align:center; margin-top:40px;">
+
+    <h1 style="
+        font-size:48px;
+        background: linear-gradient(to right, #ff6ec4, #7873f5);
+        -webkit-background-clip: text;
+        color: transparent;
+    ">
+        Welcome to HobbyHub
+    </h1>
+
+    <p style="font-size:18px; color:#555;">
+        Don't check the box.
+    </p>
+
+</div>
+
+<!-- HEARTS (LIFE SYSTEM) -->
+<div id="hearts" style="
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    font-size:32px;
+    margin-top:30px;
+">
+    <span class="heart">❤️</span>
+    <span class="heart">❤️</span>
+    <span class="heart">❤️</span>
+    <span class="heart">❤️</span>
+    <span class="heart">❤️</span>
+</div>
+
+<!-- CHAOTIC CHECKBOX -->
+<div style="text-align:center; margin-top:40px;">
+    <label style="font-size:18px;">
+        <input type="checkbox" onclick="toggleLoading(this)"> Smell the ocean?
+    </label>
+</div>
+
+<!-- LOADING BAR -->
+<div style="width:50%; margin:20px auto; background:#eee; border-radius:10px; overflow:hidden;">
+    <div id="loadingBar" style="width:0%; height:20px; background:linear-gradient(to right, #ff6ec4, #7873f5);"></div>
+</div>
+
+<p id="loadingText" style="text-align:center; font-weight:bold;"></p>
+
+<script>
+    let interval;
+    let seagullInterval;
+    let lives = 5;
+
+    function toggleLoading(checkbox) {
+        let bar = document.getElementById("loadingBar");
+        let text = document.getElementById("loadingText");
+        let hearts = document.querySelectorAll(".heart");
+
+        // If checkbox is unchecked → reset visuals only
+        if (!checkbox.checked) {
+            clearInterval(interval);
+            clearInterval(seagullInterval);
+            bar.style.width = "0%";
+            text.innerText = "";
+
+            document.querySelectorAll(".seagull").forEach(e => e.remove());
+            return;
+        }
+
+        // If no lives → RESET GAME
+        if (lives === 0) {
+            lives = 5;
+            hearts.forEach(h => h.innerText = "❤️");
+            checkbox.checked = false;
+            return;
+        }
+
+        // LOSE ONE LIFE
+        lives--;
+        hearts[lives].innerText = "🖤";
+
+        // START LOADING
+        bar.style.width = "0%";
+        text.innerText = "Seagulls are approaching your location...";
+
+        let width = 0;
+
+        interval = setInterval(function () {
+            if (width >= 100) {
+                clearInterval(interval);
+                text.innerText = "Peter, the seagulls are here";
+                startSeagulls();
+            } else {
+                width++;
+
+                if (width === 50) {
+                    text.innerText = "Are you sure?";
+                }
+
+                bar.style.width = width + "%";
+            }
+        }, 85);
+    }
+
+    function startSeagulls() {
+        seagullInterval = setInterval(() => {
+            let gull = document.createElement("div");
+            gull.innerText = "🦅";
+            gull.className = "seagull";
+
+            gull.style.position = "fixed";
+            gull.style.left = Math.random() * window.innerWidth + "px";
+            gull.style.top = Math.random() * window.innerHeight + "px";
+            gull.style.fontSize = (Math.random() * 20 + 20) + "px";
+            gull.style.pointerEvents = "none";
+
+            document.body.appendChild(gull);
+        }, 80);
+    }
+</script>
+
+
+<h1> Testing </h1>

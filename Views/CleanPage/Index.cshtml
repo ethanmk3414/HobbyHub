@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Clean Page";
+}
+
+<h2 style="text-align:center;">Clean the Page 🫧</h2>
+
+<p style="text-align:center;">
+    Click the bubbles to clean them up!
+</p>
+
+<div id="bubbleContainer"></div>
+
+<style>
+    #bubbleContainer {
+        position: relative;
+        width: 100%;
+        height: 80vh;
+        overflow: hidden;
+    }
+
+    .bubble {
+        position: absolute;
+        font-size: 30px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    /* 🔥 MAKE NAVBAR ALWAYS ON TOP */
+    .navbar {
+        position: relative;
+        z-index: 9999;
+    }
+</style>
+
+<script>
+    function createBubble() {
+        let bubble = document.createElement("div");
+        bubble.innerText = "🫧";
+        bubble.className = "bubble";
+
+        bubble.style.left = Math.random() * window.innerWidth + "px";
+        bubble.style.top = Math.random() * (window.innerHeight - 150) + "px";
+
+        bubble.onclick = function () {
+            bubble.remove();
+        };
+
+        document.getElementById("bubbleContainer").appendChild(bubble);
+    }
+
+    // 🔥 spawn a bunch of bubbles
+    for (let i = 0; i < 80; i++) {
+        createBubble();
+    }
+</script>

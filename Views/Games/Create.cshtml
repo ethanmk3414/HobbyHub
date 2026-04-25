@@ -1,0 +1,25 @@
+﻿@model HobbyHub.Models.Game
+
+<h2>Add New Game</h2>
+
+<form asp-action="Create" method="post">
+
+    <div>
+        <label>Title</label><br />
+        <input asp-for="Title" />
+    </div>
+
+    <div>
+        <label>Genre</label><br />
+        <input asp-for="Genre" />
+    </div>
+
+    <div>
+        <label>Release Year</label><br />
+        <input asp-for="ReleaseYear" />
+    </div>
+
+    <br />
+
+    <button type="submit">Save Game</button>
+</form>
